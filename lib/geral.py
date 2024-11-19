@@ -26,8 +26,5 @@ def calcula_massa(i, rho, config):
 def f_nulo(i):
     return 0
 
-def f_arbitraria(c_true, c_false, condition):
-    return lambda i: c_true if condition(i) else c_false
-
 def f_constante_factory(c, i_alvo):
-    return f_arbitraria(c, 0, lambda i: i == i_alvo)
+    return lambda i: c if i == i_alvo else 0
