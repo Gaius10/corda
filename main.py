@@ -36,12 +36,20 @@ def main():
     corda_jacobi, iterations_jacobi = jacobi(rho1, f, config)
     print("Iterações pelo método de Jacobi: {}".format(iterations_jacobi))
 
+    corda_jacobi2, iterations_jacobi2 = jacobi(rho2, f, config)
+    print("Iterações pelo método de Jacobi 2: {}".format(iterations_jacobi2))
+
     corda_gauss, iterations_gauss = gauss(rho1, f, config)
     print("Iterações pelo método de Gauss-Seidel: {}".format(iterations_gauss))
 
+    corda_gauss2, iterations_gauss2 = gauss(rho2, f, config)
+    print("Iterações pelo método de Gauss-Seidel 2: {}".format(iterations_gauss2))
+
     x = np.linspace(0, config['L'], config['N'])
     plt.plot(x, corda_jacobi, linestyle="solid", color="green", label="Jacobi", marker="o", markersize=2)
+    plt.plot(x, corda_jacobi2, linestyle="dashed", color="blue", label="Jacobi 2", marker="o", markersize=2)
     plt.plot(x, corda_gauss, linestyle='dotted', color="red", label="Gauss-Seidel", marker="o", markersize=2)
+    plt.plot(x, corda_gauss2, linestyle='dotted', color="black", label="Gauss-Seidel 2", marker="o", markersize=2)
     plt.legend()
     plt.show()
 
