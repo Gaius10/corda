@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import json
 
-from lib.geral import rho1, rho2, f_nulo, f_constante_factory
+from lib.geral import rho1, rho2, f_nulo, f_constante_factory, f_arbitraria
 from lib.jacobi import calcula_corda as jacobi
 from lib.gauss_seidel import calcula_corda as gauss
 
@@ -27,7 +27,7 @@ def main():
     print("Tensao da corda: {}".format(config['tensao']))
     print("Aceleracao da gravidade: {}".format(config['g']))
 
-    f = f_constante_factory(1, 39)
+    f = f_nulo
 
     corda_jacobi, iterations_jacobi = jacobi(rho1, f, config)
     print("Iterações pelo método de Jacobi: {}".format(iterations_jacobi))
