@@ -1,5 +1,5 @@
 import numpy as np
-from lib.geral import calcula_massa
+from lib.geral import calcula_massa, f
 
 
 def calcula_y(i, y, novo_y, massas, config):
@@ -14,7 +14,7 @@ def calcula_y(i, y, novo_y, massas, config):
     if i == 0 or i == N-1:
         return 0
 
-    y = ( (-l0*massas[i]*g)/(2*tensao) ) + ( (novo_y[i-1] + y[i+1]) / 2 )
+    y = ( (l0*(f(i) - massas[i]*g))/(2*tensao) ) + ( (novo_y[i-1] + y[i+1]) / 2 )
 
     return y
 

@@ -22,3 +22,6 @@ def calcula_massa(i, rho, config):
         return integrate.quad(rho, L - (3/2)*l0, L)[0]
 
     return integrate.quad(rho, (i+1)*l0 - l0/2, (i+1)*l0 + l0/2)[0]
+
+def f(i):
+    return 0
