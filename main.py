@@ -27,11 +27,11 @@ def main():
     print("Tensao da corda: {}".format(config['tensao']))
     print("Aceleracao da gravidade: {}".format(config['g']))
 
-    # f = f_nulo
+    f = f_nulo
 
-    f1 = f_constante_factory(2, 17)
-    f2 = f_constante_factory(-2, 30)
-    f = lambda i: f1(i) + f2(i)
+    # f1 = f_constante_factory(2, i_alvo=17)
+    # f2 = f_constante_factory(-2, i_alvo=30)
+    # f = lambda i: f1(i) + f2(i)
 
     corda_jacobi, iterations_jacobi = jacobi(rho1, f, config)
     print("Iterações pelo método de Jacobi: {}".format(iterations_jacobi))
