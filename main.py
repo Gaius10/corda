@@ -1,90 +1,42 @@
 import numpy as np
-import scipy.integrate as integrate
 import matplotlib.pyplot as plt
+import json
 
-L = 1
-N = 10
-l0 = L / N
-tolerancia = 1e-10
-tensao = 2
-g = 9.81
+from lib.geral import rho1, rho2
+from lib.jacobi import calcula_corda as jacobi
+from lib.gauss_seidel import calcula_corda as gauss
 
-def rho1(x):
-    return 1
+with open('config.json') as f:
+    config = json.load(f)
 
-def rho2(x):
-    return (1 + np.exp(-100*(x-0.5)**2)) / 2
+    config['L'] = float(config['L'])
+    config['N'] = int(config['N'])
+    config['tolerancia'] = float(config['tolerancia'])
+    config['tensao'] = float(config['tensao'])
+    config['g'] = float(config['g'])
 
-def calcula_massa(i, rho):
-    global l0
-    global L
-
-    if i < 0 or i >= N:
-        raise Exception("Indice {} inválido (corda dividida em {} partes)".format(i, N))
-
-    if i == 0:
-        return integrate.quad(rho, 0, (3/2)*l0)[0]
-
-    if i == N-1:
-        return integrate.quad(rho, L - (3/2)*l0, L)[0]
-
-    return integrate.quad(rho, (i+1)*l0 - l0/2, (i+1)*l0 + l0/2)[0]
-    # return integrate.quad(rho, i*l0 - l0/2, i*l0 + l0/2)[0]
-
-def calcula_y(i, y, massas):
-    global tensao
-    global l0
-    global g
-
-    if i < 0 or i >= N:
-        raise Exception("Indice {} inválido (corda dividida em {} partes)".format(i, N))
-
-    if i == 0 or i == N-1:
-        return 0
-
-    y = ( (-l0*massas[i]*g)/(2*tensao) ) + ( (y[i-1] + y[i+1]) / 2 )
-
-    return y
-
-def calcula_corda(rho):
-    global N
-
-    massas = np.zeros(N)
-    for i in range(N):
-        massas[i] = calcula_massa(i, rho)
-
-    y = np.zeros(N)
-    novo_y = np.zeros(N)
-    iterations = 0
-    while True:
-        for i in range(1, N-1):
-            novo_y[i] = calcula_y(i, y, massas)
-
-        if abs(np.linalg.norm(novo_y - y)) < tolerancia:
-            break
-
-        iterations += 1
-
-        y = np.copy(novo_y)
-
-    return y, iterations
+    config['l0'] = config['L'] / config['N']
 
 def main():
-    global l0
-    global L
-    global N
+    global config
 
-    print("Tamanho da corda: {}".format(L))
-    print("Número de partes: {}".format(N))
-    print("Comprimento das partes: {}".format(l0))
-    print("Tensao da corda: {}".format(tensao))
+    print("Tamanho da corda: {}".format(config['L']))
+    print("Número de partes: {}".format(config['N']))
+    print("Tolerancia: {}".format(config['tolerancia']))
+    print("Comprimento das partes: {}".format(config['l0']))
+    print("Tensao da corda: {}".format(config['tensao']))
+    print("Aceleracao da gravidade: {}".format(config['g']))
 
-    corda, iterations = calcula_corda(rho1)
+    corda_jacobi, iterations_jacobi = jacobi(rho1, config)
+    print("Iterações pelo método de Jacobi: {}".format(iterations_jacobi))
 
-    print("Iterações: {}".format(iterations))
+    corda_gauss, iterations_gauss = gauss(rho1, config)
+    print("Iterações pelo método de Gauss-Seidel: {}".format(iterations_gauss))
 
-    x = np.linspace(0, L, N)
-    plt.plot(x, corda)
+    x = np.linspace(0, config['L'], config['N'])
+    plt.plot(x, corda_jacobi, linestyle="solid", color="green", label="Jacobi", marker="o", markersize=2)
+    plt.plot(x, corda_gauss, linestyle='dotted', color="red", label="Gauss-Seidel", marker="o", markersize=2)
+    plt.legend()
     plt.show()
 
 main()
