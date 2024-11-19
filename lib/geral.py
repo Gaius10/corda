@@ -23,5 +23,8 @@ def calcula_massa(i, rho, config):
 
     return integrate.quad(rho, (i+1)*l0 - l0/2, (i+1)*l0 + l0/2)[0]
 
-def f(i):
+def f_nulo(i):
     return 0
+
+def f_constante_factory(c, i_alvo):
+    return lambda i: c if i == i_alvo else 0

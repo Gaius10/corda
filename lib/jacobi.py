@@ -1,7 +1,7 @@
 import numpy as np
-from lib.geral import calcula_massa, f
+from lib.geral import calcula_massa
 
-def calcula_y(i, y, massas, config):
+def calcula_y(i, y, massas, f, config):
     tensao = config['tensao']
     l0 = config['l0']
     g = config['g']
@@ -17,7 +17,7 @@ def calcula_y(i, y, massas, config):
 
     return y
 
-def calcula_corda(rho, config):
+def calcula_corda(rho, f, config):
     N = config['N']
     tolerancia = config['tolerancia']
 
@@ -30,7 +30,7 @@ def calcula_corda(rho, config):
     iterations = 0
     while True:
         for i in range(1, N-1):
-            novo_y[i] = calcula_y(i, y, massas, config)
+            novo_y[i] = calcula_y(i, y, massas, f, config)
 
         if abs(np.linalg.norm(novo_y - y)) < tolerancia:
             break
