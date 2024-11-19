@@ -57,7 +57,6 @@ def calcula_corda(rho):
     novo_y = np.zeros(N)
     iterations = 0
     while True:
-        novo_y = np.copy(y)
         for i in range(1, N-1):
             novo_y[i] = calcula_y(i, y, massas)
 
@@ -66,7 +65,7 @@ def calcula_corda(rho):
 
         iterations += 1
 
-        y = novo_y
+        y = np.copy(novo_y)
 
     return y, iterations
 
