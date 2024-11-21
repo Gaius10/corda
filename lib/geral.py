@@ -5,7 +5,7 @@ def rho1(x):
     return 1
 
 def rho2(x):
-    return (1 + np.exp(-100*(x-0.5)**2)) / 2
+    return (1 + np.exp(-100.0*(x-0.5)**2.0)) / 2.0
 
 def calcula_massa(i, rho, config):
     L = config['L']

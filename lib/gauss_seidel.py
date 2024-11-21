@@ -14,7 +14,7 @@ def calcula_y(i, y, novo_y, massas, f, config):
     if i == 0 or i == N-1:
         return 0
 
-    y = ( (l0*(f(i) - massas[i]*g))/(2*tensao) ) + ( (novo_y[i-1] + y[i+1]) / 2 )
+    y = ( (l0*(f(i) - massas[i]*g))/(2.0*tensao) ) + ( (novo_y[i-1] + y[i+1]) / 2.0 )
 
     return y
 
