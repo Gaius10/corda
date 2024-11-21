@@ -8,13 +8,6 @@ from lib.gauss_seidel import calcula_corda as gauss
 
 with open('config.json') as f:
     config = json.load(f)
-
-    config['L'] = float(config['L'])
-    config['N'] = int(config['N'])
-    config['tolerancia'] = float(config['tolerancia'])
-    config['tensao'] = float(config['tensao'])
-    config['g'] = float(config['g'])
-
     config['l0'] = config['L'] / config['N']
 
 def main():
